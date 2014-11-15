@@ -32,18 +32,30 @@ module.exports.copyTiles = function(event, context) {
     Bucket: srcBucket,
     Key: srcKey
   }).createReadStream()
-    .on('error', callback)
+    .on('error', function(err) {
+      err.message = 'S3READ: ' + err.message;
+      callback(err);
+    })
     .pipe(fs.createWriteStream(tmpFile))
-    .on('error', callback)
+    .on('error', function(err) {
+      err.message = 'FSWRITE: ' + err.message;
+      callback(err);
+    })
     .on('finish', function() {
       new MBTiles(srcUri, function(err, src) {
         if (err) return callback(err);
         new S3(dstUri, function(err, dst) {
           src.createZXYStream()
             .pipe(tilelive.createReadStream(src, { type: 'list' }))
-            .on('error', callback)
+            .on('error', function(err) {
+              err.message = 'MBTILESREAD: ' + err.message;
+              callback(err);
+            })
             .pipe(tilelive.createWriteStream(dst))
-            .on('error', callback)
+            .on('error', function(err) {
+              err.message = 'S3WRITE: ' + err.message;
+              callback(err);
+            })
             .on('stop', function() {
               console.log('Finished %s', dstUri);
               callback();
