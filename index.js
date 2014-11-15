@@ -46,6 +46,7 @@ module.exports.copyTiles = function(event, context) {
         if (err) return callback(err);
         tilelive.load(dstUri, function(err, dst) {
           if (err) return callback(err);
+          console.log('--> Start copy of %s to %s', srcUri, dstUri);
           src.createZXYStream()
             .pipe(tilelive.createReadStream(src, { type: 'list' }))
             .on('error', function(err) {
