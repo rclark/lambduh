@@ -42,9 +42,9 @@ module.exports.copyTiles = function(event, context) {
       callback(err);
     })
     .on('finish', function() {
-      new MBTiles(srcUri, function(err, src) {
+      tilelive.load(srcUri, function(err, src) {
         if (err) return callback(err);
-        new S3(dstUri, function(err, dst) {
+        tilelive.load(dstUri, function(err, dst) {
           if (err) return callback(err);
           src.createZXYStream()
             .pipe(tilelive.createReadStream(src, { type: 'list' }))
