@@ -23,7 +23,7 @@ module.exports.copyTiles = function(event, context) {
   var srcBucket = event.Records[0].s3.bucket.name;
 	var srcKey = event.Records[0].s3.object.key;
   var srcName = path.basename(srcKey);
-  var tmpFile = path.join(os.tmpdir(), 'mbtiles', srcName);
+  var tmpFile = path.join(os.tmpdir(), srcName);
 
   var srcUri = 'mbtiles://' + tmpFile;
   var dstUri = 's3://mapbox/lambda-testing/' + srcName + '/{z}/{x}/{y}';
