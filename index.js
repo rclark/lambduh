@@ -45,6 +45,7 @@ module.exports.copyTiles = function(event, context) {
       new MBTiles(srcUri, function(err, src) {
         if (err) return callback(err);
         new S3(dstUri, function(err, dst) {
+          if (err) return callback(err);
           src.createZXYStream()
             .pipe(tilelive.createReadStream(src, { type: 'list' }))
             .on('error', function(err) {
