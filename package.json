@@ -1,0 +1,18 @@
+{
+  "name": "lambduh",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.0.27",
+    "mbtiles": "^0.7.3",
+    "tilelive": "^5.3.3",
+    "tilelive-s3": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Clark",
+  "license": "ISC"
+}
